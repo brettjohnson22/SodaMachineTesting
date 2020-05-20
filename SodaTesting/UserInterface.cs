@@ -35,10 +35,10 @@ namespace SodaMachineProject
                 + "\nPress 2 for Orange, .06"
                 + "\nPress 3 for Root Beer, .60"
                 );
-            string input = Console.ReadLine();
             string sodaChoice = "";
             while (sodaChoice == "")
             {
+                string input = Console.ReadLine();
                 switch (input)
                 {
                     case "1":
@@ -49,6 +49,9 @@ namespace SodaMachineProject
                         break;
                     case "3":
                         sodaChoice = "Root Beer";
+                        break;
+                    default:
+                        Console.WriteLine("Error, try again.");
                         break;
                 }
             }

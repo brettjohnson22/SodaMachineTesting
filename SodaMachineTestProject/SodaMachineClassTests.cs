@@ -6,12 +6,11 @@ using SodaMachineProject;
 namespace SodaMachineTestProject
 {
     [TestClass]
-    public class UnitTest1
+    public class SodaMachineClassTests
     {
         [TestMethod]
-        public void SodaMachine_Execute_PayForOrange_WithNickelAndPenny_GetStatus3()
+        public void Execute_PayForOrange_WithNickelAndPenny_GetStatus3()
         {
-
             //Arrange
             SodaMachine soda = new SodaMachine();
             Customer cust = new Customer();

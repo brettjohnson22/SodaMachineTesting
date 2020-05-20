@@ -245,6 +245,7 @@ namespace SodaMachineProject
             customer.backpack.cans.Add(selection);
             inventory.Remove(selection);
         }
+
         //Takes in a list of coins and removes the from register
         //This does NOT test to see if register actually contains those coins
         private void EjectCoins(List<Coin> coins)
