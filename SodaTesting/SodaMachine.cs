@@ -7,7 +7,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SodaTesting
+namespace SodaMachineProject
 {
     public class SodaMachine
     {
@@ -111,8 +111,8 @@ namespace SodaTesting
         }
 
         //Main method that allows a customer to try to purchase a soda
-        //Will result in 5 possibilities depending on parameters
-        public void Execute(Customer customer, string sodaChoice, List<Coin> deposit)
+        //Will result in the 5 possibilities mentioned in user story depending on parameters and state of sodamachine's inventory/register
+        public int Execute(Customer customer, string sodaChoice, List<Coin> deposit)
         {
             double payment = AcceptCoins(deposit);
 
@@ -159,6 +159,9 @@ namespace SodaTesting
 
             //Displays console message informing user of results
             UserInterface.DecodeStatusCode(statusCode, sodaChoice, change, payment);
+
+            //return value is not captured in program, but can be tested
+            return statusCode;
         }
 
         //Compares payment to price of can and returns the difference, positive, negative, or zero
