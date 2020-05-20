@@ -58,8 +58,7 @@
     <Compile Include="CanClasses\RootBeer.cs" />
     <Compile Include="Simulation.cs" />
     <Compile Include="SodaMachine.cs" />
-    <Compile Include="StaticClasses\UserInterface.cs" />
-    <Compile Include="StaticClasses\MoneyValue.cs" />
+    <Compile Include="UserInterface.cs" />
     <Compile Include="CustomerClasses\Wallet.cs" />
   </ItemGroup>
   <ItemGroup>

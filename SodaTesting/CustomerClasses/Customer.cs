@@ -20,7 +20,7 @@ namespace SodaTesting
         //This large method relies on user input through Console.ReadLines, so it is not easily testable.
         //However, the many submethods that are called within it only rely on parameters being passed in
         //So they can each be individually tested by calling them with appropriate parameters
-        private List<Coin> ChooseCoinsToDeposit()
+        public List<Coin> ChooseCoinsToDeposit()
         {
             List<Coin> deposit = null;
             bool input = true;
@@ -54,6 +54,8 @@ namespace SodaTesting
             return deposit;
         }
 
+        //Takes in an int and a list of coins, and adds appropriate coin to the list and returns it.
+        //If list passed in is null, it will create a new list and add the first coin to it.
         private List<Coin> DepositSingleCoin(int coinChoice, List<Coin> deposit)
         {
             if (deposit == null)
@@ -78,16 +80,6 @@ namespace SodaTesting
                     break;
             }
             return deposit;
-        }
-
-
-        public void AddSomeCoins()
-        {
-            //List<Coin> deposit = InputCoin(1);
-            //deposit = InputCoin(2, deposit);
-            //deposit = InputCoin(3, deposit);
-            //UserInterface.DisplayValue("deposited", deposit);
-            List<Coin> coins = ChooseCoinsToDeposit();
         }
 
     }

@@ -27,6 +27,7 @@ namespace SodaTesting
             }
         }
 
+        //Takes in an int and checks to see if wallet contains appropriate coin
         public bool ContainsCoin(int coinChoice)
         {
             bool found = false;
@@ -42,6 +43,8 @@ namespace SodaTesting
             return found;
         }
 
+        //Takes in an int and removes a coin of the appropriate type
+        //Does NOT check to see if wallet has the coin, that occurs in Customer's ChooseCoinstoDeposit method
         public void RemoveCoin(int coinChoice)
         {
             string coinName = UserInterface.DecodeCoinSelection(coinChoice);

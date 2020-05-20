@@ -24,11 +24,27 @@ namespace SodaTesting
         public static string ChooseSoda()
         {
             Console.WriteLine("Sodas offered: Cola, Orange, Root Beer"
-                + "\nPress 1 for Cola"
-                + "\nPress 2 for Orange"
-                + "\nPress 3 for Root Beer"
+                + "\nPress 1 for Cola, .35"
+                + "\nPress 2 for Orange, .06"
+                + "\nPress 3 for Root Beer, .60"
                 );
-            string sodaChoice = Console.ReadLine();
+            string input = Console.ReadLine();
+            string sodaChoice = "";
+            while (sodaChoice == "")
+            {
+                switch (input)
+                {
+                    case "1":
+                        sodaChoice = "cola";
+                        break;
+                    case "2":
+                        sodaChoice = "orange";
+                        break;
+                    case "3":
+                        sodaChoice = "rootbeer";
+                        break;
+                }
+            }
             return sodaChoice;
         }
         public static string AskBuyAnotherSoda()
@@ -41,7 +57,7 @@ namespace SodaTesting
         }
         public static void DisplayValue(string message, List<Coin> coins)
         {
-            Console.WriteLine($"Total Amount {message}: {MoneyValue.CheckValue(coins)}");
+            Console.WriteLine($"Total Amount {message}: {UserInterface.CheckValue(coins)}");
         }
         public static void NoCoinMessage(int coinChoice)
         {
@@ -68,6 +84,42 @@ namespace SodaTesting
                     break;
             }
             return coinName;
+        }
+
+        public static void DecodeStatusCode(int statusCode)
+        {
+            switch (statusCode)
+            {
+                case 1:
+                    Console.WriteLine("Selection unavailable. Take your change and try again.");
+                    break;
+                case 2:
+                    Console.WriteLine("Insufficient payment. Take your change and try again");
+                    break;
+                case 3:
+                    Console.WriteLine("Thanks for using exact change. Enjoy your soda!");
+                    break;
+                case 4:
+                    Console.WriteLine("Be sure to grab your change. Enjoy your soda!"); 
+                    break;
+                case 5:
+                    Console.WriteLine("Insufficient change to complete payment, collect your change. We apologize for the inconvenience.");
+                    break;
+                default:
+                    Console.WriteLine("ERROR: Status Unknown");
+                        break;
+
+            }
+        }
+
+        public static double CheckValue(List<Coin> coins)
+        {
+            double totalValue = 0;
+            foreach (Coin coin in coins)
+            {
+                totalValue += coin.Value;
+            }
+            return Math.Round(totalValue, 2);
         }
     }
 }
