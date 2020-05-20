@@ -27,7 +27,7 @@ namespace SodaTesting
                 List<Coin> deposit = customer.ChooseCoinsToDeposit();
                 string choice = UserInterface.ChooseSoda();
                 sodaMachine.Execute(customer, choice, deposit);
-                UserInterface.AskBuyAnotherSoda();
+                buyChoice = UserInterface.AskBuyAnotherSoda();
             }
             Console.ReadLine();
 

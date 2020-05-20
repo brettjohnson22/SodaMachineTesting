@@ -13,15 +13,7 @@ namespace SodaTesting
             Console.WriteLine("Thanks for choosing dCC Soda!"
                 + "\nSodas offered: Cola (.35), Orange (.06), Root Beer (.60)\n");
         }
-        public static void DisplayInventory()
-        {
 
-        }
-
-        public static void DisplayMoney()
-        {
-
-        }
         public static string DisplayCoinOptions()
         {
             Console.WriteLine("Please input desired coins"
@@ -35,6 +27,7 @@ namespace SodaTesting
             string coinChoice = Console.ReadLine();
             return coinChoice;
         }
+
         public static string ChooseSoda()
         {
             Console.WriteLine("Sodas offered: Cola, Orange, Root Beer"
@@ -61,6 +54,7 @@ namespace SodaTesting
             }
             return sodaChoice;
         }
+
         public static string AskBuyAnotherSoda()
         {
             Console.WriteLine("Do you want to purchase another soda?"
@@ -69,6 +63,7 @@ namespace SodaTesting
             string buyAnotherChoice = Console.ReadLine();
             return buyAnotherChoice;
         }
+
         public static double CheckValue(List<Coin> coins)
         {
             double totalValue = 0;
@@ -78,6 +73,7 @@ namespace SodaTesting
             }
             return Math.Round(totalValue, 2);
         }
+
         public static string DecodeCoinSelection(int consoleChoice)
         {
             string coinName = "";
@@ -98,6 +94,7 @@ namespace SodaTesting
             }
             return coinName;
         }
+
         public static void DecodeStatusCode(int statusCode, string sodaChoice, double change, double payment)
         {
             switch (statusCode)
@@ -112,20 +109,22 @@ namespace SodaTesting
                     Console.WriteLine($"Enjoy your {sodaChoice}! Thanks for using exact change!");
                     break;
                 case 4:
-                    Console.WriteLine($"Enjoy your {sodaChoice}! Collect {change} below."); 
+                    Console.WriteLine($"Enjoy your {sodaChoice}! Collect {change} below.");
                     break;
                 case 5:
                     Console.WriteLine($"Insufficient change to complete refund, we apologize for the inconvenience. Collect {payment} below");
                     break;
                 default:
                     Console.WriteLine("ERROR: Status Unknown");
-                        break;
+                    break;
             }
         }
+
         public static void DisplayValue(string message, List<Coin> coins)
         {
             Console.WriteLine($"Total Amount {message}: {UserInterface.CheckValue(coins)}");
         }
+
         public static void NoCoinMessage(int coinChoice)
         {
             string coinName = UserInterface.DecodeCoinSelection(coinChoice);

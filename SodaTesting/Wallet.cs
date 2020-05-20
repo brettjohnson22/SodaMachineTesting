@@ -18,14 +18,20 @@ namespace SodaTesting
 
         private void PickUpChange()
         {
-            for (int i = 0; i < 5; i++)
+            AddCoinsToWallet(5, new Quarter());
+            AddCoinsToWallet(5, new Dime());
+            AddCoinsToWallet(5, new Nickel());
+            AddCoinsToWallet(5, new Penny());
+        }
+
+        private void AddCoinsToWallet(int numOfCoins, Coin coin)
+        {
+            for (int i = 0; i < numOfCoins; i++)
             {
-                coins.Add(new Dime());
-                coins.Add(new Quarter());
-                coins.Add(new Nickel());
-                coins.Add(new Penny());
+                coins.Add(coin);
             }
         }
+
 
         //Takes in an int and checks to see if wallet contains appropriate coin
         public bool ContainsCoin(int coinChoice)
@@ -50,7 +56,7 @@ namespace SodaTesting
             string coinName = UserInterface.DecodeCoinSelection(coinChoice);
             for (int i = 0; i < coins.Count; i++)
             {
-                if(coins[i].name == coinName)
+                if (coins[i].name == coinName)
                 {
                     coins.RemoveAt(i);
                     break;
@@ -60,7 +66,7 @@ namespace SodaTesting
 
         public void AcceptCoins(List<Coin> returnedAmount)
         {
-            foreach(Coin coin in returnedAmount)
+            foreach (Coin coin in returnedAmount)
             {
                 coins.Add(coin);
             }

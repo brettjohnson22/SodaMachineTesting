@@ -29,15 +29,20 @@ namespace SodaTesting
             inventory = new List<Can>();
             if (testCondition == "nomoney")
             {
+                //only cans, no money
                 FillStock();
             }
             else if (testCondition == "nosoda")
             {
+                //only money, no cans
                 FillRegister();
+            }
+            else if (testCondition == "nothing")
+            {
+                //no cans or money
             }
 
         }
-
 
         private void FillRegister()
         {
@@ -46,7 +51,6 @@ namespace SodaTesting
             AddCoinsToRegister(20, new Nickel());
             AddCoinsToRegister(50, new Penny());
         }
-
 
         private void FillStock()
         {
@@ -97,7 +101,7 @@ namespace SodaTesting
         }
 
         //Takes a list of coins and adds them to internal register
-        public double AcceptCoins(List<Coin> deposit)
+        private double AcceptCoins(List<Coin> deposit)
         {
             foreach (Coin coin in deposit)
             {
@@ -137,6 +141,9 @@ namespace SodaTesting
                 case 4:
                     //Overpayed, dispense soda to backpack and change to wallet
                     DispenseSodaToCustomer(customer, selection);
+                    List<Coin> refund = CreateChange(change);
+                    EjectCoins(refund);
+                    customer.wallet.AcceptCoins(refund);
                     break;
                 case 5:
                     //Machine out of change, return deposit
@@ -144,6 +151,8 @@ namespace SodaTesting
                     customer.wallet.AcceptCoins(deposit);
                     break;
                 default:
+                    //We shouldn't get here, but return deposit just incase
+                    EjectCoins(deposit);
                     customer.wallet.AcceptCoins(deposit);
                     break;
             }
@@ -152,15 +161,15 @@ namespace SodaTesting
             UserInterface.DecodeStatusCode(statusCode, sodaChoice, change, payment);
         }
 
-        //Compares payment to price and returns the difference, positive, negative, or zero
-        public double DetermineAmountOfChange(Can can, double payment)
+        //Compares payment to price of can and returns the difference, positive, negative, or zero
+        private double DetermineAmountOfChange(Can can, double payment)
         {
             double change = payment - can.Cost;
             return change;
         }
 
-        //Returns 1-5 as status code of attempted sale
-        public int AttemptSale(Can selection, double change)
+        //Returns ints 1-5 as status code of attempted sale. See Execute method for status code explanations
+        private int AttemptSale(Can selection, double change)
         {
             int statusCode = 0;
             if (selection == null)
@@ -179,10 +188,12 @@ namespace SodaTesting
                 }
                 else if (change > 0)
                 {
+                    //Attempt to make change to see if register has enough coins, but can't return them yet so put them back in reg
                     List<Coin> refund = CreateChange(change);
-                    if(refund.Count > 0)
+                    if (refund.Count > 0)
                     {
                         statusCode = 4;
+                        AcceptCoins(refund);
                     }
                     else
                     {
@@ -196,7 +207,7 @@ namespace SodaTesting
 
         //Takes in a string and returns a can of that type if available.
         //If stock does not contain that type of can, this will return null
-        public Can PrepareCan(string canChoice)
+        private Can PrepareCan(string canChoice)
         {
             Can actualCan = null;
             switch (canChoice)
@@ -226,14 +237,14 @@ namespace SodaTesting
             return actualCan;
         }
 
-        public void DispenseSodaToCustomer(Customer customer, Can selection)
+        private void DispenseSodaToCustomer(Customer customer, Can selection)
         {
             customer.backpack.cans.Add(selection);
             inventory.Remove(selection);
         }
         //Takes in a list of coins and removes the from register
         //This does NOT test to see if register actually contains those coins
-        public void EjectCoins(List<Coin> coins)
+        private void EjectCoins(List<Coin> coins)
         {
             foreach (Coin coin in coins)
             {
@@ -243,7 +254,7 @@ namespace SodaTesting
 
         //Creates a list of Coins equal to the value of parameter
         //Will return empty list if insufficient change exists
-        public List<Coin> CreateChange(double changeAmount)
+        private List<Coin> CreateChange(double changeAmount)
         {
             List<Coin> refund = new List<Coin>();
 
@@ -277,7 +288,7 @@ namespace SodaTesting
             }
             changeAmount = Math.Round(changeAmount, 2);
             if (changeAmount != 0)
-            { 
+            {
                 AcceptCoins(refund);
                 refund.Clear();
             }

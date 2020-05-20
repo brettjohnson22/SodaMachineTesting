@@ -24,10 +24,9 @@ namespace SodaTesting
         {
             List<Coin> deposit = null;
             bool input = true;
-            int coinChoice;
             while (input)
             {
-                bool success = Int32.TryParse(UserInterface.DisplayCoinOptions(), out coinChoice);
+                bool success = Int32.TryParse(UserInterface.DisplayCoinOptions(), out int coinChoice);
                 Console.Clear();
                 if (success && coinChoice > 0 && coinChoice < 5)
                 {
@@ -83,6 +82,8 @@ namespace SodaTesting
             }
             return deposit;
         }
+
+
 
     }
 }
