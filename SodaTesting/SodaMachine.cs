@@ -22,17 +22,27 @@ namespace SodaTesting
             FillStock();
         }
 
-        //Overload the constructor with a string to simulate empty register/inventory
-        public SodaMachine(string emptyMachine)
+        //Overload of constructor to simulate different conditions for testing
+        public SodaMachine(string testCondition)
         {
             register = new List<Coin>();
             inventory = new List<Can>();
+            if (testCondition == "nomoney")
+            {
+                FillStock();
+            }
+            else if (testCondition == "nosoda")
+            {
+                FillRegister();
+            }
+
         }
+
 
         private void FillRegister()
         {
-            AddCoinsToRegister(10, new Dime());
             AddCoinsToRegister(20, new Quarter());
+            AddCoinsToRegister(10, new Dime());
             AddCoinsToRegister(20, new Nickel());
             AddCoinsToRegister(50, new Penny());
         }
@@ -87,7 +97,7 @@ namespace SodaTesting
         }
 
         //Takes a list of coins and adds them to internal register
-        public double AcceptPayment(List<Coin> deposit)
+        public double AcceptCoins(List<Coin> deposit)
         {
             foreach (Coin coin in deposit)
             {
@@ -100,11 +110,11 @@ namespace SodaTesting
         //Will result in 5 possibilities depending on parameters
         public void Execute(Customer customer, string sodaChoice, List<Coin> deposit)
         {
-            double payment = AcceptPayment(deposit);
+            double payment = AcceptCoins(deposit);
 
             Can selection = PrepareCan(sodaChoice);
 
-            double change = DetermineChange(selection, payment);
+            double change = DetermineAmountOfChange(selection, payment);
 
             int statusCode = AttemptSale(selection, change);
 
@@ -139,13 +149,13 @@ namespace SodaTesting
             }
 
             //Displays console message informing user of results
-            UserInterface.DecodeStatusCode(statusCode);
+            UserInterface.DecodeStatusCode(statusCode, sodaChoice, change, payment);
         }
 
         //Compares payment to price and returns the difference, positive, negative, or zero
-        public double DetermineChange(Can can, double payment)
+        public double DetermineAmountOfChange(Can can, double payment)
         {
-            double change = can.Cost - payment;
+            double change = payment - can.Cost;
             return change;
         }
 
@@ -169,8 +179,15 @@ namespace SodaTesting
                 }
                 else if (change > 0)
                 {
-                    //if machine has change, statuscode 4
-                    //if not, statuscode 5
+                    List<Coin> refund = CreateChange(change);
+                    if(refund.Count > 0)
+                    {
+                        statusCode = 4;
+                    }
+                    else
+                    {
+                        statusCode = 5;
+                    }
 
                 }
             }
@@ -184,21 +201,21 @@ namespace SodaTesting
             Can actualCan = null;
             switch (canChoice)
             {
-                case "cola":
+                case "Cola":
                     Can cola = new Cola();
                     if (ContainsCan(cola))
                     {
                         actualCan = cola;
                     }
                     break;
-                case "orange":
+                case "Orange Soda":
                     Can orange = new OrangeSoda();
                     if (ContainsCan(orange))
                     {
                         actualCan = orange;
                     }
                     break;
-                case "rootbeer":
+                case "Root Beer":
                     Can rootbeer = new RootBeer();
                     if (ContainsCan(rootbeer))
                     {
@@ -218,47 +235,51 @@ namespace SodaTesting
         //This does NOT test to see if register actually contains those coins
         public void EjectCoins(List<Coin> coins)
         {
-            foreach(Coin coin in coins)
+            foreach (Coin coin in coins)
             {
                 register.Remove(coin);
             }
         }
 
-        public bool CheckForChange(double amount)
-        {
-            while (amount != 0)
-            {
-
-
-
-
-
-            }
-            return false;
-        }
-
+        //Creates a list of Coins equal to the value of parameter
+        //Will return empty list if insufficient change exists
         public List<Coin> CreateChange(double changeAmount)
         {
             List<Coin> refund = new List<Coin>();
 
-            while(changeAmount > 0)
+            foreach (Coin coin in register.ToList())
             {
-                if(changeAmount > .25)
+                changeAmount = Math.Round(changeAmount, 2);
+                if (coin.Value == 0.25 && changeAmount >= 0.25)
                 {
-                    refund.Add(new Quarter());
+                    changeAmount -= 0.25;
+                    register.Remove(coin);
+                    refund.Add(coin);
                 }
-                else if(changeAmount > .10)
+                else if (coin.Value == 0.10 && changeAmount >= 0.10)
                 {
-                    refund.Add(new Dime());
+                    changeAmount -= 0.10;
+                    register.Remove(coin);
+                    refund.Add(coin);
                 }
-                else if (changeAmount > .05)
+                else if (coin.Value == 0.05 && changeAmount >= 0.05)
                 {
-                    refund.Add(new Nickel());
+                    changeAmount -= 0.05;
+                    register.Remove(coin);
+                    refund.Add(coin);
                 }
-                else if (changeAmount > .01)
+                else if (coin.Value == 0.01 && changeAmount >= 0.01)
                 {
-                    refund.Add(new Penny());
+                    changeAmount -= 0.01;
+                    register.Remove(coin);
+                    refund.Add(coin);
                 }
+            }
+            changeAmount = Math.Round(changeAmount, 2);
+            if (changeAmount != 0)
+            { 
+                AcceptCoins(refund);
+                refund.Clear();
             }
             return refund;
 

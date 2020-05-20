@@ -19,13 +19,17 @@ namespace SodaTesting
 
         public void RunSim()
         {
-
-
-            List<Coin> deposit = customer.ChooseCoinsToDeposit();
-            string choice = UserInterface.ChooseSoda();
-            sodaMachine.Execute(customer, choice, deposit);
+            string buyChoice = "1";
+            while (buyChoice == "1")
+            {
+                Console.Clear();
+                UserInterface.WelcomeMessage();
+                List<Coin> deposit = customer.ChooseCoinsToDeposit();
+                string choice = UserInterface.ChooseSoda();
+                sodaMachine.Execute(customer, choice, deposit);
+                UserInterface.AskBuyAnotherSoda();
+            }
             Console.ReadLine();
-
 
         }
     }

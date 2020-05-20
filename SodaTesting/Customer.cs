@@ -48,7 +48,9 @@ namespace SodaTesting
                 else if (coinChoice == 6)
                 {
                     wallet.AcceptCoins(deposit);
+                    deposit.Clear();
                 }
+                UserInterface.WelcomeMessage();
                 UserInterface.DisplayValue("deposited", deposit);
             }
             return deposit;

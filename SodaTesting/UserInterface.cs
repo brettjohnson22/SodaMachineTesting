@@ -8,6 +8,20 @@ namespace SodaTesting
 {
     static class UserInterface
     {
+        public static void WelcomeMessage()
+        {
+            Console.WriteLine("Thanks for choosing dCC Soda!"
+                + "\nSodas offered: Cola (.35), Orange (.06), Root Beer (.60)\n");
+        }
+        public static void DisplayInventory()
+        {
+
+        }
+
+        public static void DisplayMoney()
+        {
+
+        }
         public static string DisplayCoinOptions()
         {
             Console.WriteLine("Please input desired coins"
@@ -15,7 +29,7 @@ namespace SodaTesting
                 + "\nPress 2 for Dime"
                 + "\nPress 3 for Nickel"
                 + "\nPress 4 for Penny"
-                + "\nPress 5 when you are done"
+                + "\nPress 5 when done to choose a soda"
                 + "\nPress 6 to cancel and refund"
                 );
             string coinChoice = Console.ReadLine();
@@ -35,13 +49,13 @@ namespace SodaTesting
                 switch (input)
                 {
                     case "1":
-                        sodaChoice = "cola";
+                        sodaChoice = "Cola";
                         break;
                     case "2":
-                        sodaChoice = "orange";
+                        sodaChoice = "Orange Soda";
                         break;
                     case "3":
-                        sodaChoice = "rootbeer";
+                        sodaChoice = "Root Beer";
                         break;
                 }
             }
@@ -55,16 +69,15 @@ namespace SodaTesting
             string buyAnotherChoice = Console.ReadLine();
             return buyAnotherChoice;
         }
-        public static void DisplayValue(string message, List<Coin> coins)
+        public static double CheckValue(List<Coin> coins)
         {
-            Console.WriteLine($"Total Amount {message}: {UserInterface.CheckValue(coins)}");
+            double totalValue = 0;
+            foreach (Coin coin in coins)
+            {
+                totalValue += coin.Value;
+            }
+            return Math.Round(totalValue, 2);
         }
-        public static void NoCoinMessage(int coinChoice)
-        {
-            string coinName = UserInterface.DecodeCoinSelection(coinChoice);
-            Console.WriteLine($"You don't have any coins of type: {coinName}!");
-        }
-
         public static string DecodeCoinSelection(int consoleChoice)
         {
             string coinName = "";
@@ -85,41 +98,39 @@ namespace SodaTesting
             }
             return coinName;
         }
-
-        public static void DecodeStatusCode(int statusCode)
+        public static void DecodeStatusCode(int statusCode, string sodaChoice, double change, double payment)
         {
             switch (statusCode)
             {
                 case 1:
-                    Console.WriteLine("Selection unavailable. Take your change and try again.");
+                    Console.WriteLine($"Out of {sodaChoice}. Collect {payment} below and try again.");
                     break;
                 case 2:
-                    Console.WriteLine("Insufficient payment. Take your change and try again");
+                    Console.WriteLine($"Insufficient payment for {sodaChoice}. Collect {payment} below and try again");
                     break;
                 case 3:
-                    Console.WriteLine("Thanks for using exact change. Enjoy your soda!");
+                    Console.WriteLine($"Enjoy your {sodaChoice}! Thanks for using exact change!");
                     break;
                 case 4:
-                    Console.WriteLine("Be sure to grab your change. Enjoy your soda!"); 
+                    Console.WriteLine($"Enjoy your {sodaChoice}! Collect {change} below."); 
                     break;
                 case 5:
-                    Console.WriteLine("Insufficient change to complete payment, collect your change. We apologize for the inconvenience.");
+                    Console.WriteLine($"Insufficient change to complete refund, we apologize for the inconvenience. Collect {payment} below");
                     break;
                 default:
                     Console.WriteLine("ERROR: Status Unknown");
                         break;
-
             }
         }
-
-        public static double CheckValue(List<Coin> coins)
+        public static void DisplayValue(string message, List<Coin> coins)
         {
-            double totalValue = 0;
-            foreach (Coin coin in coins)
-            {
-                totalValue += coin.Value;
-            }
-            return Math.Round(totalValue, 2);
+            Console.WriteLine($"Total Amount {message}: {UserInterface.CheckValue(coins)}");
         }
+        public static void NoCoinMessage(int coinChoice)
+        {
+            string coinName = UserInterface.DecodeCoinSelection(coinChoice);
+            Console.WriteLine($"You don't have any coins of type: {coinName}!");
+        }
+
     }
 }

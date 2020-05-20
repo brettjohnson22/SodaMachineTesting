@@ -12,9 +12,6 @@ namespace SodaTesting
         {
             Simulation sim = new Simulation();
             sim.RunSim();
-
-
-
         }
     }
 }

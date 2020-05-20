@@ -43,11 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CustomerClasses\Backpack.cs" />
+    <Compile Include="Backpack.cs" />
     <Compile Include="CanClasses\Can.cs" />
     <Compile Include="CoinClasses\Coin.cs" />
     <Compile Include="CanClasses\Cola.cs" />
-    <Compile Include="CustomerClasses\Customer.cs" />
+    <Compile Include="Customer.cs" />
     <Compile Include="CoinClasses\Dime.cs" />
     <Compile Include="CoinClasses\Nickel.cs" />
     <Compile Include="CanClasses\OrangeSoda.cs" />
@@ -59,7 +59,7 @@
     <Compile Include="Simulation.cs" />
     <Compile Include="SodaMachine.cs" />
     <Compile Include="UserInterface.cs" />
-    <Compile Include="CustomerClasses\Wallet.cs" />
+    <Compile Include="Wallet.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
