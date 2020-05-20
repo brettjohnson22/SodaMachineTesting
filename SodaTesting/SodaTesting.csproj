@@ -43,24 +43,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Backpack.cs" />
-    <Compile Include="Can.cs" />
-    <Compile Include="Coin.cs" />
-    <Compile Include="Cola.cs" />
-    <Compile Include="Customer.cs" />
-    <Compile Include="Dime.cs" />
-    <Compile Include="Nickel.cs" />
-    <Compile Include="OrangeSoda.cs" />
-    <Compile Include="Penny.cs" />
+    <Compile Include="CustomerClasses\Backpack.cs" />
+    <Compile Include="CanClasses\Can.cs" />
+    <Compile Include="CoinClasses\Coin.cs" />
+    <Compile Include="CanClasses\Cola.cs" />
+    <Compile Include="CustomerClasses\Customer.cs" />
+    <Compile Include="CoinClasses\Dime.cs" />
+    <Compile Include="CoinClasses\Nickel.cs" />
+    <Compile Include="CanClasses\OrangeSoda.cs" />
+    <Compile Include="CoinClasses\Penny.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Quarter.cs" />
-    <Compile Include="RootBeer.cs" />
+    <Compile Include="CoinClasses\Quarter.cs" />
+    <Compile Include="CanClasses\RootBeer.cs" />
     <Compile Include="Simulation.cs" />
     <Compile Include="SodaMachine.cs" />
-    <Compile Include="UserInterface.cs" />
-    <Compile Include="ValueCheck.cs" />
-    <Compile Include="Wallet.cs" />
+    <Compile Include="StaticClasses\UserInterface.cs" />
+    <Compile Include="StaticClasses\MoneyValue.cs" />
+    <Compile Include="CustomerClasses\Wallet.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

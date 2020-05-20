@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SodaTesting
 {
-    public static class ValueCheck
+    public static class MoneyValue
     {
         public static double CheckValue(List<Coin> coins)
         {
@@ -15,7 +15,7 @@ namespace SodaTesting
             {
                 totalValue += coin.Value;
             }
-            return totalValue;
+            return Math.Round(totalValue, 2);
         }
 
         public static double CheckPrice(List<Can> cans)
@@ -25,7 +25,7 @@ namespace SodaTesting
             {
                 totalValue += can.Cost;
             }
-            return totalValue;
+            return Math.Round(totalValue, 2);
         }
 
     }

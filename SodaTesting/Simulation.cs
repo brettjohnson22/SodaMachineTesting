@@ -19,7 +19,7 @@ namespace SodaTesting
 
         public void RunSim()
         {
-            sodaMachine.AddSomeCoins();
+            customer.AddSomeCoins();
             Console.ReadLine();
 
 

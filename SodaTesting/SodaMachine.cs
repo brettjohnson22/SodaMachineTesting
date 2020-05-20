@@ -22,10 +22,10 @@ namespace SodaTesting
 
         private void FillRegister()
         {
-            AddCoin(10, new Dime());
-            AddCoin(20, new Quarter());
-            AddCoin(20, new Nickel());
-            AddCoin(50, new Penny());
+            AddCoinsToRegister(10, new Dime());
+            AddCoinsToRegister(20, new Quarter());
+            AddCoinsToRegister(20, new Nickel());
+            AddCoinsToRegister(50, new Penny());
         }
 
         private void FillStock()
@@ -66,7 +66,7 @@ namespace SodaTesting
             return found;
         }
 
-        private void AddCoin(int numOfCoins, Coin coin)
+        private void AddCoinsToRegister(int numOfCoins, Coin coin)
         {
             for (int i = 0; i < numOfCoins; i++)
             {
@@ -74,67 +74,45 @@ namespace SodaTesting
             }
         }
 
-        private List<Coin> ChooseCoins()
+
+        public void AcceptPayment(List<Coin> deposit)
         {
-            List<Coin> deposit = null;
-            bool input = true;
-            int coinChoice;
-            while (input)
+            foreach(Coin coin in deposit)
             {
-                bool success = Int32.TryParse(UserInterface.DisplayOptions(), out coinChoice);
-                if (success && coinChoice > 0 && coinChoice < 5)
-                {
-                    deposit = InputSingleCoin(coinChoice, deposit);
-                }
-                else if(coinChoice == 5)
-                {
-                    input = false;
-                }
-                Console.Clear();
-                UserInterface.DisplayValue("deposited", deposit);
+                register.Add(coin);
             }
-            return deposit;
         }
 
-        private List<Coin> InputSingleCoin(int coinChoice, List<Coin> deposit)
+
+        public bool ProcessSale(Customer customer, string sodaChoice, List<Coin> deposit)
         {
-            if(deposit == null)
+            bool successfulSale = false;
+            AcceptPayment(deposit);
+            if (ContainsCan(sodaChoice))
             {
-                deposit = new List<Coin>();
+                //check deposit vs price
+                if(MoneyValue.CheckValue(deposit) == )
+
+
             }
-            switch (coinChoice)
+            else
             {
-                case 1:
-                    deposit.Add(new Quarter());
-                    break;
-                case 2:
-                    deposit.Add(new Dime());
-                    break;
-                case 3:
-                    deposit.Add(new Nickel());
-                    break;
-                case 4:
-                    deposit.Add(new Penny());
-                    break;
-                case 5:
-                    break;
-                default:
-                    break;
+                //No soda available, refund change
+                customer.wallet.AcceptCoins(deposit);
             }
-            return deposit;
+
+
+            //Check for soda stock
+            //If in stock:
+            //Check deposit vs price
+            //If price over, make change
+            //If not in stock, reprompt
+
+            return successfulSale;
         }
 
 
 
 
-
-        public void AddSomeCoins()
-        {
-            //List<Coin> deposit = InputCoin(1);
-            //deposit = InputCoin(2, deposit);
-            //deposit = InputCoin(3, deposit);
-            //UserInterface.DisplayValue("deposited", deposit);
-            List<Coin> coins = ChooseCoins();
-        }
     }
 }
