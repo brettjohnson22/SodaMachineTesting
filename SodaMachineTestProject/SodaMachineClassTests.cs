@@ -9,7 +9,7 @@ namespace SodaMachineTestProject
     public class SodaMachineClassTests
     {
         [TestMethod]
-        public void Execute_PayForOrange_WithTwoQuarters_GetStatus4()
+        public void Execute_OverPayForOrange_TwoQuarters_GetStatus4()
         {
             //Arrange
             //We need a SodaMachine, a Customer, and a list of coins to test this method, so we instantiate them in the Arrange
@@ -31,7 +31,7 @@ namespace SodaMachineTestProject
         }
 
         [TestMethod]
-        public void Execute_PayForOrange_WithTwoQuarters_RegisterHas95CoinsAfterSale()
+        public void Execute_OverPayForOrange_TwoQuarters_RegisterHas95CoinsAfterSale()
         {
             //Arrange
             //Same Arrange as last test!

@@ -76,21 +76,6 @@ namespace SodaMachineProject
             return found;
         }
 
-        //Takes in a can instance, checks to see if that type of can exists in inventory
-        public bool ContainsCan(Can selection)
-        {
-            bool found = false;
-            foreach (Can can in inventory)
-            {
-                if (can.name == selection.name)
-                {
-                    found = true;
-                    break;
-                }
-            }
-            return found;
-        }
-
         //Used by constructor to add a certain amount of any coin
         public void AddCoinsToRegister(int numOfCoins, Coin coin)
         {
@@ -195,6 +180,21 @@ namespace SodaMachineProject
                     break;
             }
             return actualCan;
+        }
+
+        //Takes in a can instance, checks to see if that type of can exists in inventory
+        public bool ContainsCan(Can selection)
+        {
+            bool found = false;
+            foreach (Can can in inventory)
+            {
+                if (can.name == selection.name)
+                {
+                    found = true;
+                    break;
+                }
+            }
+            return found;
         }
 
         //Compares payment to price of can and returns the difference, positive, negative, or zero
