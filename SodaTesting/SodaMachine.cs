@@ -41,7 +41,6 @@ namespace SodaMachineProject
             {
                 //no cans or money
             }
-
         }
 
         private void FillRegister()
