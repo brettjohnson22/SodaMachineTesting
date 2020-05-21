@@ -67,6 +67,7 @@ namespace SodaMachineProject
             return buyAnotherChoice;
         }
 
+        //Returns money value of a list of coins
         public static double CheckValue(List<Coin> coins)
         {
             double totalValue = 0;
@@ -98,6 +99,7 @@ namespace SodaMachineProject
             return coinName;
         }
 
+        //Final display message from Execute method
         public static void DecodeStatusCode(int statusCode, string sodaChoice, double change, double payment)
         {
             switch (statusCode)
@@ -106,7 +108,7 @@ namespace SodaMachineProject
                     Console.WriteLine($"Out of {sodaChoice}. Collect {payment} below and try again.");
                     break;
                 case 2:
-                    Console.WriteLine($"Insufficient payment for {sodaChoice}. Collect {payment} below and try again");
+                    Console.WriteLine($"Insufficient payment for {sodaChoice}. Collect {payment} below and try again.");
                     break;
                 case 3:
                     Console.WriteLine($"Enjoy your {sodaChoice}! Thanks for using exact change!");
@@ -115,10 +117,10 @@ namespace SodaMachineProject
                     Console.WriteLine($"Enjoy your {sodaChoice}! Collect {change} below.");
                     break;
                 case 5:
-                    Console.WriteLine($"Insufficient change to complete refund, we apologize for the inconvenience. Collect {payment} below");
+                    Console.WriteLine($"Insufficient change to complete refund, we apologize for the inconvenience. Collect {payment} below.");
                     break;
                 default:
-                    Console.WriteLine("ERROR: Status Unknown");
+                    Console.WriteLine($"ERROR: Status Unknown. Returning {payment}");
                     break;
             }
         }
@@ -133,6 +135,5 @@ namespace SodaMachineProject
             string coinName = UserInterface.DecodeCoinSelection(coinChoice);
             Console.WriteLine($"You don't have any coins of type: {coinName}!");
         }
-
     }
 }

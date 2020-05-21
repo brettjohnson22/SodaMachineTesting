@@ -18,8 +18,8 @@ namespace SodaMachineProject
         }
 
         //This large method relies on user input through Console.ReadLines, so it is not easily testable.
-        //However, the many submethods that are called within it only rely on parameters being passed in
-        //So they can each be individually tested by calling them with appropriate parameters
+        //However, many submethods that are called within it only rely on parameters being passed in
+        //So they can be individually tested by calling them with appropriate parameters
         public List<Coin> ChooseCoinsToDeposit()
         {
             List<Coin> deposit = null;
@@ -57,7 +57,7 @@ namespace SodaMachineProject
 
         //Takes in an int and a list of coins, and adds appropriate coin to the list and returns it.
         //If list passed in is null, it will create a new list and add the first coin to it.
-        private List<Coin> DepositSingleCoin(int coinChoice, List<Coin> deposit)
+        public List<Coin> DepositSingleCoin(int coinChoice, List<Coin> deposit)
         {
             if (deposit == null)
             {
@@ -82,8 +82,5 @@ namespace SodaMachineProject
             }
             return deposit;
         }
-
-
-
     }
 }

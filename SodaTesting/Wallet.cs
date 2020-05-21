@@ -71,6 +71,5 @@ namespace SodaMachineProject
                 coins.Add(coin);
             }
         }
-
     }
 }
