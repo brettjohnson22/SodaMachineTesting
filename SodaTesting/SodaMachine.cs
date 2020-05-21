@@ -62,6 +62,7 @@ namespace SodaMachineProject
             }
         }
 
+        //Takes in a coin name, checks to see if coin of that type exists in register
         private bool ContainsCoin(string coinName)
         {
             bool found = false;
@@ -76,7 +77,7 @@ namespace SodaMachineProject
             return found;
         }
 
-        //Checks to see if a certain type of can exists in inventory
+        //Takes in a can instance, checks to see if that type of can exists in inventory
         private bool ContainsCan(Can selection)
         {
             bool found = false;
@@ -100,16 +101,6 @@ namespace SodaMachineProject
             }
         }
 
-        //Takes a list of coins and adds them to internal register
-        private double AcceptCoins(List<Coin> deposit)
-        {
-            foreach (Coin coin in deposit)
-            {
-                register.Add(coin);
-            }
-            return UserInterface.CheckValue(deposit);
-        }
-
         //Main method that allows a customer to try to purchase a soda
         //Will result in the 5 possibilities mentioned in user story depending on parameters and state of sodamachine's inventory/register
         public int Execute(Customer customer, string sodaChoice, List<Coin> deposit)
@@ -126,12 +117,12 @@ namespace SodaMachineProject
             {
                 case 1:
                     //No stock, return deposit to customer's wallet
-                    EjectCoins(deposit);
+                    EjectDeposit(deposit);
                     customer.wallet.AcceptCoins(deposit);
                     break;
                 case 2:
                     //Insufficient payment, return deposit to customer's wallet
-                    EjectCoins(deposit);
+                    EjectDeposit(deposit);
                     customer.wallet.AcceptCoins(deposit);
                     break;
                 case 3:
@@ -142,17 +133,16 @@ namespace SodaMachineProject
                     //Overpayed, dispense soda to backpack and change to wallet
                     DispenseSodaToCustomer(customer, selection);
                     List<Coin> refund = CreateChange(change);
-                    EjectCoins(refund);
                     customer.wallet.AcceptCoins(refund);
                     break;
                 case 5:
                     //Machine out of change, return deposit
-                    EjectCoins(deposit);
+                    EjectDeposit(deposit);
                     customer.wallet.AcceptCoins(deposit);
                     break;
                 default:
                     //We shouldn't get here, but return deposit just incase
-                    EjectCoins(deposit);
+                    EjectDeposit(deposit);
                     customer.wallet.AcceptCoins(deposit);
                     break;
             }
@@ -164,48 +154,14 @@ namespace SodaMachineProject
             return statusCode;
         }
 
-        //Compares payment to price of can and returns the difference, positive, negative, or zero
-        private double DetermineAmountOfChange(Can can, double payment)
+        //Takes in a list of coins and adds them to internal register, returns the money value of the list
+        private double AcceptCoins(List<Coin> deposit)
         {
-            double change = payment - can.Cost;
-            return change;
-        }
-
-        //Returns ints 1-5 as status code of attempted sale. See Execute method for status code explanations
-        private int AttemptSale(Can selection, double change)
-        {
-            int statusCode = 0;
-            if (selection == null)
+            foreach (Coin coin in deposit)
             {
-                statusCode = 1;
+                register.Add(coin);
             }
-            else
-            {
-                if (change < 0)
-                {
-                    statusCode = 2;
-                }
-                if (change == 0)
-                {
-                    statusCode = 3;
-                }
-                else if (change > 0)
-                {
-                    //Attempt to make change to see if register has enough coins, but can't return them yet so put them back in reg
-                    List<Coin> refund = CreateChange(change);
-                    if (refund.Count > 0)
-                    {
-                        statusCode = 4;
-                        AcceptCoins(refund);
-                    }
-                    else
-                    {
-                        statusCode = 5;
-                    }
-
-                }
-            }
-            return statusCode;
+            return UserInterface.CheckValue(deposit);
         }
 
         //Takes in a string and returns a can of that type if available.
@@ -236,24 +192,57 @@ namespace SodaMachineProject
                         actualCan = rootbeer;
                     }
                     break;
+                default:
+                    break;
             }
             return actualCan;
         }
 
-        private void DispenseSodaToCustomer(Customer customer, Can selection)
+        //Compares payment to price of can and returns the difference, positive, negative, or zero
+        private double DetermineAmountOfChange(Can can, double payment)
         {
-            customer.backpack.cans.Add(selection);
-            inventory.Remove(selection);
+            double change = payment - can.Cost;
+            return change;
         }
 
-        //Takes in a list of coins and removes the from register
-        //This does NOT test to see if register actually contains those coins
-        private void EjectCoins(List<Coin> coins)
+        //Takes in a can instance and a double which represents whether customer over or underpaid
+        //Returns ints 1-5 as status code of attempted sale
+        //See Execute method for status code explanations
+        private int AttemptSale(Can selection, double change)
         {
-            foreach (Coin coin in coins)
+            int statusCode = 0;
+            if (selection == null)
             {
-                register.Remove(coin);
+                statusCode = 1;
             }
+            else
+            {
+                if (change < 0)
+                {
+                    statusCode = 2;
+                }
+                if (change == 0)
+                {
+                    statusCode = 3;
+                }
+                else if (change > 0)
+                {
+                    //Attempt to make change to see if register has enough coins,
+                    //but can't return them yet so must put them back in reg
+                    List<Coin> refund = CreateChange(change);
+                    if (refund.Count > 0)
+                    {
+                        statusCode = 4;
+                        AcceptCoins(refund);
+                    }
+                    else
+                    {
+                        statusCode = 5;
+                    }
+
+                }
+            }
+            return statusCode;
         }
 
         //Creates a list of Coins equal to the value of parameter
@@ -297,8 +286,36 @@ namespace SodaMachineProject
                 refund.Clear();
             }
             return refund;
-
         }
 
+        //Takes in a list of coins and removes them from register
+        //This only works on a List that was previously added, such as "deposit"
+        public void EjectDeposit(List<Coin> coins)
+        {
+            foreach (Coin coin in coins)
+            {
+                register.Remove(coin);
+            }
+        }
+
+        //Removes can from inventory, adds it to Customer backpack
+        private void DispenseSodaToCustomer(Customer customer, Can selection)
+        {
+            RemoveCan(selection);
+            customer.backpack.cans.Add(selection);
+        }
+
+        //Removes first can from inventory that matches Can passed in
+        private void RemoveCan(Can can)
+        {
+            for (int i = 0; i < inventory.Count; i++)
+            {
+                if(inventory[i].name == can.name)
+                {
+                    inventory.RemoveAt(i);
+                    break;
+                }
+            }
+        }
     }
 }
