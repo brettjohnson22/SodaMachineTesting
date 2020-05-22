@@ -56,25 +56,6 @@ namespace SodaMachineTestProject
             Assert.AreEqual(expected, actual);
         }
 
-        [TestMethod]
-        public void Execute_e()
-        {
-            //100 coins in starting reg + 2 quarters payment - 7 coins as change = 95 coins 
-            //Arrange
-            SodaMachine soda = new SodaMachine();
-            Customer cust = new Customer();
-            int expected = 2;
-            int actual;
-
-            //Act
-            List<Coin> coins = new List<Coin>() { new Quarter() };
-
-            actual = soda.Execute(cust, "Cola", coins);
-
-          
-
-            //Assert
-            Assert.AreEqual(expected, actual);
-        }
+        
     }
 }
