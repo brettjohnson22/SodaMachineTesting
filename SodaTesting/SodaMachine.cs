@@ -27,19 +27,19 @@ namespace SodaMachineProject
         {
             register = new List<Coin>();
             inventory = new List<Can>();
-            if (testCondition == "nomoney")
+            if (testCondition == "noMoney")
             {
-                //only cans, no money to test insufficient change
+                //Only cans, no money. Will have insufficient change
                 FillStock();
             }
-            else if (testCondition == "nosoda")
+            else if (testCondition == "noSoda")
             {
-                //only money, no cans to test insufficient stock
+                //Only money, no cans. All cans out of stock
                 FillRegister();
             }
             else if (testCondition == "nothing")
             {
-                //no cans or money
+                //No cans or money
             }
         }
 
@@ -100,12 +100,12 @@ namespace SodaMachineProject
             switch (statusCode)
             {
                 case 1:
-                    //No stock, return deposit to customer's wallet
+                    //Choice was out of stock, return deposit to customer's wallet
                     EjectDeposit(deposit);
                     customer.wallet.AcceptCoins(deposit);
                     break;
                 case 2:
-                    //Insufficient payment, return deposit to customer's wallet
+                    //Insufficient payment deposited, return deposit to customer's wallet
                     EjectDeposit(deposit);
                     customer.wallet.AcceptCoins(deposit);
                     break;
