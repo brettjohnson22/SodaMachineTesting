@@ -42,12 +42,18 @@ namespace SodaMachineProject
                 }
                 else if (coinChoice == 5)
                 {
-                    input = false;
+                    if (deposit != null)
+                    {
+                        input = false;
+                    }
                 }
                 else if (coinChoice == 6)
                 {
-                    wallet.AcceptCoins(deposit);
-                    deposit.Clear();
+                    if (deposit != null)
+                    {
+                        wallet.AcceptCoins(deposit);
+                        deposit.Clear();
+                    }
                 }
                 UserInterface.WelcomeMessage();
                 UserInterface.DisplayValue("deposited", deposit);

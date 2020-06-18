@@ -70,6 +70,10 @@ namespace SodaMachineProject
         //Returns money value of a list of coins
         public static double CheckValue(List<Coin> coins)
         {
+            if(coins == null)
+            {
+                return 0;
+            }
             double totalValue = 0;
             foreach (Coin coin in coins)
             {

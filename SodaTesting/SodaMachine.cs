@@ -223,7 +223,7 @@ namespace SodaMachineProject
             {
                 statusCode = 2;
             }
-            if (change == 0)
+            else if (change == 0)
             {
                 statusCode = 3;
             }
