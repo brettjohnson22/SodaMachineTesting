@@ -18,17 +18,32 @@ namespace SodaMachineProject
 
         private void PickUpChange()
         {
-            AddCoinsToWallet(5, new Quarter());
-            AddCoinsToWallet(5, new Dime());
-            AddCoinsToWallet(5, new Nickel());
-            AddCoinsToWallet(5, new Penny());
+            AddCoinsToWallet(5, "quarter");
+            AddCoinsToWallet(5, "dime");
+            AddCoinsToWallet(5, "nickel");
+            AddCoinsToWallet(5, "penny");
         }
 
-        private void AddCoinsToWallet(int numOfCoins, Coin coin)
+        public void AddCoinsToWallet(int numOfCoins, string coin)
         {
             for (int i = 0; i < numOfCoins; i++)
             {
-                coins.Add(coin);
+                if (coin == "quarter")
+                {
+                    coins.Add(new Quarter());
+                }
+                else if (coin == "dime")
+                {
+                    coins.Add(new Dime());
+                }
+                else if (coin == "nickel")
+                {
+                    coins.Add(new Nickel());
+                }
+                else if (coin == "penny")
+                {
+                    coins.Add(new Penny());
+                }
             }
         }
 

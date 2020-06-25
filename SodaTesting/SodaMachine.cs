@@ -45,10 +45,10 @@ namespace SodaMachineProject
 
         public void FillRegister()
         {
-            AddCoinsToRegister(20, new Quarter());
-            AddCoinsToRegister(10, new Dime());
-            AddCoinsToRegister(20, new Nickel());
-            AddCoinsToRegister(50, new Penny());
+            AddCoinsToRegister(20, "quarter");
+            AddCoinsToRegister(10, "dime");
+            AddCoinsToRegister(20, "nickel");
+            AddCoinsToRegister(50, "penny");
         }
 
         public void FillStock()
@@ -77,11 +77,26 @@ namespace SodaMachineProject
         }
 
         //Used by constructor to add a certain amount of any coin
-        public void AddCoinsToRegister(int numOfCoins, Coin coin)
+        public void AddCoinsToRegister(int numOfCoins, string coin)
         {
             for (int i = 0; i < numOfCoins; i++)
             {
-                register.Add(coin);
+                if (coin == "quarter")
+                {
+                    register.Add(new Quarter());
+                }
+                else if (coin == "dime")
+                {
+                    register.Add(new Dime());
+                }
+                else if (coin == "nickel")
+                {
+                    register.Add(new Nickel());
+                }
+                else if (coin == "penny")
+                {
+                    register.Add(new Penny());
+                }
             }
         }
 
